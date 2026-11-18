@@ -1,4 +1,4 @@
-# FlightLab
+# Flight_Dynamics / FlightLab
 
 FlightLab is a reproducible, headless C++20 harness for evaluating civilian-aircraft simulation and autopilot software. It is an early portfolio project: no real-flight, certification, hardware-in-the-loop, or real-time claims are made.
 

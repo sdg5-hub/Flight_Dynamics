@@ -2,13 +2,13 @@
 
 #include <filesystem>
 #include <fstream>
-#include "flightlab/types.hpp"
+#include "flightlab/scenario_runner.hpp"
 
 namespace flightlab {
 class CsvRecorder {
  public:
   explicit CsvRecorder(const std::filesystem::path& path);
-  void record(const AircraftState& state);
+  void record(const TelemetrySample& sample);
  private:
   std::ofstream stream_;
 };

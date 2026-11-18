@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="FlightLab telemetry replay dashboard">
+    <title>FlightLab — telemetry replay</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#replay">Skip to replay controls</a>
+    <div class="app-shell">
+      <aside class="identity" aria-label="FlightLab navigation">
+        <a class="wordmark" href="#top" aria-label="FlightLab telemetry replay home">
+          <span class="wordmark-mark" aria-hidden="true">FL</span>
+          <span>FlightLab</span>
+        </a>
+        <p class="identity-purpose">Simulation evidence, held to the record.</p>
+        <nav aria-label="Replay sections">
+          <a href="#replay" aria-current="page">Replay</a>
+          <a href="#trace">Response trace</a>
+          <a href="#motion">Spatial state</a>
+          <a href="#evidence">Run record</a>
+        </nav>
+        <div class="identity-note">
+          <span class="status-dot" id="side-status" aria-hidden="true"></span>
+          <span id="side-status-text">Waiting for telemetry</span>
+        </div>
+      </aside>
+
+      <main id="top">
+        <header class="run-header">
+          <div>
+            <h1 id="run-title">No run loaded</h1>
+          </div>
+          <div class="run-state" aria-live="polite">
+            <strong id="run-state">Awaiting data</strong>
+            <span id="source-file">Looking for generated CSV</span>
+          </div>
+        </header>
+
+        <section class="replay-section" id="replay" aria-labelledby="replay-heading">
+          <div class="section-heading">
+            <div>
+              <h2 id="replay-heading">Maneuver replay</h2>
+              <p id="replay-caption">Load a generated telemetry file to inspect a recorded run.</p>
+            </div>
+            <label class="file-load" for="file-input">
+              <span>Open local CSV</span>
+              <input id="file-input" type="file" accept=".csv,text/csv">
+            </label>
+          </div>
+
+          <div class="replay-controls" aria-label="Replay controls">
+            <button id="play-pause" type="button" disabled aria-label="Play replay">Play</button>
+            <button id="reset" class="secondary" type="button" disabled>Reset</button>
+            <label class="scrubber-label" for="scrubber"><span>Replay position</span>
+              <input id="scrubber" type="range" min="0" max="0" value="0" disabled>
+            </label>
+            <output id="time-readout" for="scrubber">N/A</output>
+            <label class="speed-label" for="speed"><span>Speed</span>
+              <select id="speed" disabled>
+                <option value="0.25">0.25×</option>
+                <option value="0.5">0.5×</option>
+                <option value="1" selected>1×</option>
+                <option value="2">2×</option>
+                <option value="4">4×</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="maneuver-strip" aria-label="Maneuver timeline" id="maneuver-strip">
+            <div class="maneuver-track"><span class="maneuver-cursor" id="maneuver-cursor" aria-hidden="true"></span></div>
+            <ol id="event-list" class="event-list" aria-label="Detected maneuver events"></ol>
+          </div>
+        </section>
+
+        <section class="trace-section" id="trace" aria-labelledby="trace-heading">
+          <div class="section-heading compact">
+            <div>
+              <h2 id="trace-heading">Response trace</h2>
+              <p>Heading, altitude, and true airspeed share one time reference. The orange rule is the active replay sample.</p>
+            </div>
+            <div class="legend" aria-label="Response trace legend">
+              <span><i class="heading-key"></i>Heading</span>
+              <span><i class="altitude-key"></i>Altitude</span>
+              <span><i class="airspeed-key"></i>True airspeed</span>
+              <span><i class="target-key"></i>Setpoint</span>
+            </div>
+          </div>
+          <figure class="plot-figure">
+            <canvas id="trace-canvas" role="img" aria-label="Telemetry response trace"></canvas>
+            <figcaption id="trace-caption">No recorded samples available.</figcaption>
+          </figure>
+          <table class="sr-only" id="telemetry-summary">
+            <caption>Response trace data summary from the loaded telemetry file</caption>
+            <thead><tr><th>Metric</th><th>Start</th><th>Final</th><th>Recorded range</th><th>Final setpoint</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </section>
+
+        <section class="motion-section" id="motion" aria-labelledby="motion-heading">
+          <div class="section-heading compact">
+            <div>
+              <h2 id="motion-heading">Spatial state</h2>
+              <p>Projected from recorded position when available; this view is a replay aid, not a navigation display.</p>
+            </div>
+          </div>
+          <div class="motion-layout">
+            <figure class="path-figure">
+              <canvas id="path-canvas" role="img" aria-label="Projected recorded path"></canvas>
+              <figcaption id="path-caption">Position data is unavailable in the current telemetry file.</figcaption>
+            </figure>
+            <figure class="attitude-figure">
+              <canvas id="attitude-canvas" role="img" aria-label="Recorded attitude sketch"></canvas>
+              <figcaption>Bank and pitch are shown only when those fields exist in the log.</figcaption>
+            </figure>
+            <dl class="live-values" aria-label="Current replay state">
+              <div><dt>Sim time</dt><dd id="value-time">N/A</dd></div>
+              <div><dt>Altitude</dt><dd id="value-altitude">N/A</dd></div>
+              <div><dt>Heading</dt><dd id="value-heading">N/A</dd></div>
+              <div><dt>True airspeed</dt><dd id="value-airspeed">N/A</dd></div>
+              <div><dt>Bank</dt><dd id="value-bank">N/A</dd></div>
+              <div><dt>Pitch</dt><dd id="value-pitch">N/A</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="evidence-section" id="evidence" aria-labelledby="evidence-heading">
+          <div class="section-heading compact">
+            <div>
+              <h2 id="evidence-heading">Run record</h2>
+              <p>This panel describes the file being replayed. It does not infer validation or aircraft fidelity from a successful animation.</p>
+            </div>
+          </div>
+          <div class="record-grid">
+            <dl class="record-list">
+              <div><dt>Samples</dt><dd id="record-samples">N/A</dd></div>
+              <div><dt>Duration</dt><dd id="record-duration">N/A</dd></div>
+              <div><dt>Schema</dt><dd id="record-schema">N/A</dd></div>
+              <div><dt>Available fields</dt><dd id="record-fields">N/A</dd></div>
+            </dl>
+            <div class="assumption-note">
+              <h3>Read before interpreting</h3>
+              <p id="model-note">The dashboard will identify the telemetry source after a file loads. Consult the scenario and model documentation before treating any response as an engineering conclusion.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="sr-only" id="announcer" aria-live="polite"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

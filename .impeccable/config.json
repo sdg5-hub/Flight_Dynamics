@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "dashboard/index.html"
+        ],
+        "createdAt": "2026-11-18T19:01:29.446Z",
+        "reason": "Direction contract: warm ivory is the deliberate flight-test record paper ground, paired with navy measurement ink and safety-orange active state."
+      }
+    ]
+  }
+}

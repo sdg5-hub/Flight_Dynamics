@@ -1,17 +1,16 @@
 # Implementation plan
 
-## Evidence-led scope
+## Completed vertical slices
 
-The first useful deliverable is a deterministic, headless runner with genuine telemetry and tests. A real JSBSim backend is required before FlightLab is described as an aircraft simulator. The fallback backend exists only to exercise the common interfaces while that dependency is unavailable.
+- **M0:** C++20/CMake, typed backend seam, fixed-step runner, validation, versioned telemetry, and headless tests.
+- **M1:** pinned JSBSim v1.3.3 source/model dependency; C172R load, airborne initialization, full trim, explicit unit conversion, 10 ms open-loop run, generated CSV/JSON, and integration smoke test.
+- **M2 (synthetic-model scope):** discrete PID with derivative-on-measurement and back-calculation anti-windup; cascaded heading/bank, altitude/pitch, and airspeed/throttle loops; rate-limited actuators; named change/disturbance scenario.
+- **M3 (initial evidence scope):** metric evaluator, standard-library SVG plotter, replay dashboard, requirements/test map, source/license inventory, and CI definition.
 
-## Milestone sequence
+## Next milestone
 
-1. **M0 — foundation (complete):** C++20/CMake project, typed backend seam, fixed-step scenario runner, input validation, CSV schema, and unit checks.
-2. **M1 — JSBSim vertical slice:** verify/pin JSBSim and a civilian trainer model; implement explicit unit conversion, reproducible trim, a real open-loop run, integration test, and plot from actual log.
-3. **M2 — controls:** sensors, actuator limits, discrete PID, conservative heading/altitude/airspeed scenarios, and controller tests.
-4. **M3 — evidence:** disturbance and delay experiments, acceptance configuration, replay dashboard, CI, and requirements/test mapping.
-5. **M4+ — optional:** educational 6-DOF backend, then one clearly scoped advanced comparison.
+Connect FlightLab’s controller to the JSBSim adapter only after writing a model-specific control contract: pinned properties, internal-system disablement, explicit sensor/actuator semantics, known trim point, and a separate regression scenario. Then add delayed/noisy sensor conditions, multiple seeds, fixed acceptance checks, and side-by-side synthetic/JSBSim comparison only where assumptions match.
 
-## Numerical contract today
+## Numerical contract
 
-The runner executes a positive fixed timestep and rejects nonfinite state. Time is simulated time and is independent of wall time. The fallback uses a short-step spherical-Earth position update with no wind and holds altitude, heading, and airspeed fixed. It must not be used for control conclusions.
+The simulation executes a positive, fixed 10 ms timestep. Telemetry is exported on an integer five-step cadence. Simulated time never depends on browser, wall-clock, or file playback. Invalid/nonfinite inputs are rejected or terminate a run with an explicit reason.

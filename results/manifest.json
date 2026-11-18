@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "generated_on": "2026-11-18",
+  "host": "arm64 macOS 26.6.2; Apple Clang 21.0.0; CMake 4.5.0; Python 3.14.7",
+  "jsbsim": {
+    "version": "1.3.3",
+    "commit": "66f7fafc07fe13e7ede9db20873030fed2881713"
+  },
+  "acceptance_config": {
+    "path": "configs/acceptance.json",
+    "sha256": "acedc5c22b950361cc6391ddedbf88a9fbd1644b82d7733bc95e9f716d7a1759"
+  },
+  "commands": [
+    "./build/default/flightlab_run --backend synthetic --output results/nominal.csv",
+    "python3 tools/plot_telemetry.py results/nominal.csv results/nominal.svg",
+    "./build/default/flightlab_run --backend jsbsim --output results/jsbsim-open-loop.csv"
+  ],
+  "artifacts": [
+    {
+      "path": "results/nominal.csv",
+      "sha256": "7376907403c26f97e5a58c7ed7d73efd0b503dd290c565a7ec49b7d0a978be07"
+    },
+    {
+      "path": "results/nominal.summary.json",
+      "sha256": "f57d79260a6e10f9aedbb2f16a00c237c54e94ad746dc25d2a54d1d21888ba4f"
+    },
+    {
+      "path": "results/nominal.svg",
+      "sha256": "1b7e0cdc69f7c94d4966cfdc9c312a21f3ff13ac4d1407bae4a8dfd4bbb2066d"
+    },
+    {
+      "path": "results/jsbsim-open-loop.csv",
+      "sha256": "e906b23543ade098c348f029c709dc3f0143e1e3eeb1d452ca3b1eb9e0c8d86e"
+    },
+    {
+      "path": "results/jsbsim-open-loop.summary.json",
+      "sha256": "b68ef64ec0190b2f1478f6c51a167319d682eac8d729e28b93a85b4adb9d4ed5"
+    }
+  ],
+  "note": "Hashes identify the committed evidence artifacts. Same-toolchain determinism is tested; cross-platform byte-identical output is not promised."
+}

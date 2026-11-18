@@ -1,3 +1,5 @@
 /build/
 /telemetry.csv
 /results/*.csv
+!/results/nominal.csv
+!/results/jsbsim-open-loop.csv

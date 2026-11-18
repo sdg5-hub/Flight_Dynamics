@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "status": "unmeasured",
+  "note": "Numeric acceptance bands will be committed only after a real JSBSim open-loop baseline is recorded."
+}

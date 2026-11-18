@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "artifact": "FlightLab telemetry replay dashboard",
+  "direction": "civilian flight-test record sheet",
+  "principles": [
+    "Show recorded evidence before interpretation.",
+    "Use familiar controls and a single active replay cursor as the signature interaction.",
+    "Keep model provenance and limitations visible at the point of use.",
+    "Favor rules, density, and type hierarchy over decorative surfaces."
+  ],
+  "tokens": {
+    "color": {
+      "paper": "#f4f0e7",
+      "paper_dark": "#e6dfd0",
+      "ink": "#102a43",
+      "ink_soft": "#4f6475",
+      "rule": "#b8c1bf",
+      "active": "#df5a26",
+      "active_deep": "#a73b15",
+      "heading": "#167a9b",
+      "altitude": "#24765e",
+      "attitude_sky": "#cce6e4"
+    },
+    "typography": {
+      "family": "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif",
+      "title_tracking": "-0.055em",
+      "body": "technical, compact, high-contrast"
+    },
+    "shape": {
+      "control_radius": "0.25rem",
+      "status_mark": "circle",
+      "rules": "1px or 2px measurement ink"
+    }
+  },
+  "responsive_patterns": {
+    "desktop": "15.75rem sticky navy identity rail with a max-width evidence field",
+    "tablet": "identity rail becomes top navigation at 850px",
+    "mobile": "two-column replay controls and two-column event record at 540px"
+  },
+  "interaction_patterns": [
+    "CSV replay position is driven only by recorded sample timestamps.",
+    "Actual traces use solid color; setpoints use dashed navy.",
+    "Orange identifies the current replay sample and active event.",
+    "A failed file load clears stale charts, live values, records, and enabled controls."
+  ],
+  "accessibility": [
+    "Visible focus treatment includes the hidden file input's parent label.",
+    "Interactive controls meet a 44px minimum height on touch layouts.",
+    "Reduced-motion preferences collapse transitions.",
+    "Canvas summaries are available as semantic table data."
+  ],
+  "anti_patterns": [
+    "Do not add gradients, glass panels, generic KPI cards, or decorative 3D cockpit chrome.",
+    "Do not imply validation, live operation, or aircraft fidelity from replay UI.",
+    "Do not use color as the sole indicator of state."
+  ]
+}

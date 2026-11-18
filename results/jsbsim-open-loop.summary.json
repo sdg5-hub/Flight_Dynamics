@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "backend": "jsbsim-c172r",
+  "scenario": "open-loop-trim-reference",
+  "model_note": "Pinned JSBSim C172R open-loop trim reference; no FlightLab controller is active.",
+  "completed": true,
+  "termination_reason": "duration-complete",
+  "samples": 201,
+  "duration_s": 10,
+  "heading_rms_deg": 0,
+  "altitude_rms_m": 0,
+  "airspeed_rms_mps": 0,
+  "max_bank_deg": 3.49629145381,
+  "actuator_saturation_fraction": 0,
+  "nonfinite_state_count": 0
+}

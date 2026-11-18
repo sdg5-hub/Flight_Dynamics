@@ -1,0 +1,20 @@
+{
+  "schema_version": 2,
+  "status": "initial-design-targets",
+  "frozen_after_run": "2026-11-18",
+  "applies_to": "synthetic-reduced-order-trainer / heading-altitude-airspeed",
+  "expected_backend": "synthetic-reduced-order-trainer",
+  "expected_scenario": "heading-altitude-airspeed",
+  "measurement_windows": {
+    "heading_rms_deg_from_s": 16.0,
+    "altitude_rms_m_from_s": 38.0,
+    "airspeed_rms_mps_from_s": 63.0
+  },
+  "targets": {
+    "heading_rms_deg_max": 8.0,
+    "altitude_rms_m_max": 65.0,
+    "airspeed_rms_mps_max": 0.5,
+    "nonfinite_state_count": 0
+  },
+  "note": "Targets are frozen synthetic-model design criteria, checked in CI against generated summaries. They are not aircraft-performance, certification, or hardware-validation claims."
+}
